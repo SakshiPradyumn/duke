@@ -33,6 +33,7 @@ public class Ui {
      * @return String representing the response.
      */
     public String list(TaskList tasks) {
+
         // Get the list of tasks in the Arraylist
         String listOfTasks = "Here are the tasks in your list:\n     ";
         assert listOfTasks == "Here are the tasks in your list:\n     " : "Oops";
@@ -113,6 +114,11 @@ public class Ui {
             }
         }
         // Update response
+        updateResponse(listOfTasks, isFound);
+        return getResponseDirect();
+    }
+
+    private void updateResponse(String listOfTasks, boolean isFound) {
         if (isFound) {
             int index = listOfTasks.lastIndexOf("\n     ");
             if (index > 0) {
@@ -122,6 +128,5 @@ public class Ui {
         } else {
             this.response = "\u2639 OOPS!!! There is no matching tasks in your list.";
         }
-        return getResponseDirect();
     }
 }

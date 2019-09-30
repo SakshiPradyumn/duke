@@ -165,7 +165,7 @@ public class TaskList {
      * Deletes nth task from the list of tasks.
      *
      * @param n the position of task in the list of tasks.
-     * @return the task deleted from the list.
+     * @return the task deleted from the lists.
      */
     public Task delete(int n) {
         Task task = this.tasks.get(n - 1);
@@ -182,6 +182,11 @@ public class TaskList {
     public String generateInfo() {
 
         String taskFile = "";
+        taskFile = getTimeRefact(taskFile);
+        return taskFile;
+    }
+
+    private String getTimeRefact(String taskFile) {
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
             String current;
@@ -197,6 +202,7 @@ public class TaskList {
                 taskFile += current;
             }
         }
+
         return taskFile;
     }
 }

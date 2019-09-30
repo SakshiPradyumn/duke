@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 /**
- * Deals with reading and making sense of the user command.
+ * Deals with reading and making sense of the user commands.
  */
 public class Parser {
 
@@ -49,15 +49,7 @@ public class Parser {
                     return response;
                 }
             } else if (command.length() > 7 && command.substring(0, 6).equals("delete")) {
-                if (command.charAt(6) != ' ') {
-                    Task task = taskList.add(command);
-                    return ui.add(task, taskList);
-                } else {
-                    Task task = taskList.delete(Integer.parseInt(command.substring(7)));
-                    String response = ui.delete(task, taskList);
-                    storage.writeOnFile(taskList.generateInfo());
-                    return response;
-                }
+                return getString(command);
             } else if (command.length() > 5 && command.substring(0, 4).equals("find")) {
                 if (command.charAt(4) != ' ') {
                     Task task = taskList.add(command);
@@ -67,6 +59,8 @@ public class Parser {
                     storage.writeOnFile(taskList.generateInfo());
                     return response;
                 }
+            } else if (command.substring(0, 4).equals("help")) {
+                Help.helpFile();
             } else {
                 Task task = taskList.add(command);
                 String response = ui.add(task, taskList);
@@ -78,5 +72,18 @@ public class Parser {
         } catch (Exception e) {
             throw new DukeException(e.getMessage());
         }
-}
+        return null;
+    }
+
+    private String getString(String command) throws DukeException, IOException {
+        if (command.charAt(6) != ' ') {
+            Task task = taskList.add(command);
+            return ui.add(task, taskList);
+        } else {
+            Task task = taskList.delete(Integer.parseInt(command.substring(7)));
+            String response = ui.delete(task, taskList);
+            storage.writeOnFile(taskList.generateInfo());
+            return response;
+        }
+    }
 }

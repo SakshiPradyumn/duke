@@ -38,7 +38,7 @@ public class Storage {
      * Loads file from the file path and converts instances into <code>Task</code> objects.
      *
      * @return list of tasksList.
-     * @throws FileNotFoundException Exception produced if file not found.
+     * @throws FileNotFoundException Exception produced if file not found here.
      * @throws DukeException in case of empty file.
      */
 
@@ -57,30 +57,35 @@ public class Storage {
             String tasksTime = "";
 
             Task task;
-            if (tasksType.equals("T")) {
-                task = new ToDo(tasksDescr);
-                tasksList.add(task);
-                assert tasksType == "T": "It should be T here";
-                if (tasksInfo == 1)
-                    task.mark();
-            } else if (tasksType.equals("D")) {
-                tasksTime = arr[3];
-                task = new Deadline(tasksDescr, tasksTime);
-                tasksList.add(task);
-                assert tasksType == "D": "It should be D here";
-                if (tasksInfo == 1)
-                    task.mark();
-            } else if (tasksType.equals("E")) {
-                tasksTime = arr[3];
-                task = new Event(tasksDescr, tasksTime);
-                tasksList.add(task);
-                assert tasksType == "E": "It should be E here";
-                if (tasksInfo == 1)
-                    task.mark();
-            }
+            checkTaskAndMark(arr, tasksType, tasksInfo, tasksDescr);
         }
-
         return tasksList;
+    }
+
+    private void checkTaskAndMark(String[] arr, String tasksType, int tasksInfo, String tasksDescr) {
+        Task task;
+        String tasksTime;
+        if (tasksType.equals("T")) {
+            task = new ToDo(tasksDescr);
+            tasksList.add(task);
+            assert tasksType == "T": "It should be T here";
+            if (tasksInfo == 1)
+                task.mark();
+        } else if (tasksType.equals("D")) {
+            tasksTime = arr[3];
+            task = new Deadline(tasksDescr, tasksTime);
+            tasksList.add(task);
+            assert tasksType == "D": "It should be D here";
+            if (tasksInfo == 1)
+                task.mark();
+        } else if (tasksType.equals("E")) {
+            tasksTime = arr[3];
+            task = new Event(tasksDescr, tasksTime);
+            tasksList.add(task);
+            assert tasksType == "E": "It should be E here";
+            if (tasksInfo == 1)
+                task.mark();
+        }
     }
 
 }
